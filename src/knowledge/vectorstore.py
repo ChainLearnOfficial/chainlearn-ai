@@ -6,7 +6,6 @@ Supports cosine similarity search and persistence to/from JSON.
 
 import json
 import logging
-import math
 from pathlib import Path
 
 import numpy as np

@@ -20,7 +20,7 @@ class CohereClient:
 
     def __init__(self, api_key: str | None = None) -> None:
         self._api_key = api_key or settings.cohere_api_key
-        self._client = cohere.ClientV2(api_key=self._api_key)
+        self._client = cohere.AsyncClientV2(api_key=self._api_key)
         self._embed_model = settings.cohere_embed_model
         self._generate_model = settings.cohere_generate_model
 
@@ -54,7 +54,7 @@ class CohereClient:
         messages.append({"role": "user", "content": prompt})
 
         try:
-            response = self._client.chat(
+            response = await self._client.chat(
                 model=self._generate_model,
                 messages=messages,
                 max_tokens=max_tokens,
@@ -108,7 +108,11 @@ class CohereClient:
             logger.debug("Raw response: %s", raw[:500])
             raise ValueError(f"Invalid JSON response from Cohere: {exc}") from exc
 
-    async def embed(self, texts: list[str], input_type: str = "search_document") -> list[list[float]]:
+    async def embed(
+        self,
+        texts: list[str],
+        input_type: str = "search_document",
+    ) -> list[list[float]]:
         """Generate embeddings for a list of texts.
 
         Args:
@@ -125,7 +129,7 @@ class CohereClient:
             return []
 
         try:
-            response = self._client.embed(
+            response = await self._client.embed(
                 model=self._embed_model,
                 texts=texts,
                 input_type=input_type,

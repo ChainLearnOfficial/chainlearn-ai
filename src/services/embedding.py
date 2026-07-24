@@ -34,7 +34,8 @@ class EmbeddingService:
             )
             all_embeddings.extend(embeddings)
 
-        logger.info("Embedded %d documents in %d batches", len(texts), (len(texts) - 1) // batch_size + 1)
+        num_batches = (len(texts) - 1) // batch_size + 1
+        logger.info("Embedded %d documents in %d batches", len(texts), num_batches)
         return all_embeddings
 
     async def embed_query(self, query: str) -> list[float]:

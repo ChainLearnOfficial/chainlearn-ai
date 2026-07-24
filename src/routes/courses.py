@@ -3,7 +3,6 @@
 import logging
 
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import JSONResponse
 
 from src.models.course import Course, GenerateCourseRequest
 from src.services.generation import get_generation_service
