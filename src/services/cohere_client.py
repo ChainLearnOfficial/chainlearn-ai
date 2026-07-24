@@ -108,7 +108,11 @@ class CohereClient:
             logger.debug("Raw response: %s", raw[:500])
             raise ValueError(f"Invalid JSON response from Cohere: {exc}") from exc
 
-    async def embed(self, texts: list[str], input_type: str = "search_document") -> list[list[float]]:
+    async def embed(
+        self,
+        texts: list[str],
+        input_type: str = "search_document",
+    ) -> list[list[float]]:
         """Generate embeddings for a list of texts.
 
         Args:

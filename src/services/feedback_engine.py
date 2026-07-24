@@ -114,7 +114,10 @@ class FeedbackEngine:
             return f"Correct! {question.explanation}"
 
         correct_option = question.options[question.correct_index]
-        user_option = question.options[user_answer] if 0 <= user_answer < len(question.options) else "N/A"
+        if 0 <= user_answer < len(question.options):
+            user_option = question.options[user_answer]
+        else:
+            user_option = "N/A"
         return (
             f"Incorrect. You chose '{user_option}', but the correct answer is '{correct_option}'. "
             f"{question.explanation}"

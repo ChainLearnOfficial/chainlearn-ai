@@ -5,7 +5,6 @@ overlapping chunks suitable for embedding and retrieval.
 """
 
 import logging
-import os
 from pathlib import Path
 
 from src.config import settings
@@ -91,7 +90,10 @@ def chunk_text(
                 chunks.append("\n\n".join(current_chunk))
                 # Keep overlap
                 overlap_text = "\n\n".join(current_chunk)
-                overlap_chars = overlap_text[-chunk_overlap:] if len(overlap_text) > chunk_overlap else overlap_text
+                if len(overlap_text) > chunk_overlap:
+                    overlap_chars = overlap_text[-chunk_overlap:]
+                else:
+                    overlap_chars = overlap_text
                 current_chunk = [overlap_chars] if overlap_chars.strip() else []
                 current_length = len(overlap_chars)
 

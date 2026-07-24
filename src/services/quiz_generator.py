@@ -3,12 +3,12 @@
 import logging
 import uuid
 
+from src.knowledge.vectorstore import get_vectorstore
 from src.models.quiz import GenerateQuizRequest, Quiz, QuizQuestion
-from src.prompts.quiz_generation import build_quiz_prompt, build_question_from_content_prompt
+from src.prompts.quiz_generation import build_question_from_content_prompt, build_quiz_prompt
 from src.prompts.system import QUIZ_SYSTEM_PROMPT
 from src.services.cohere_client import get_cohere_client
 from src.services.embedding import get_embedding_service
-from src.knowledge.vectorstore import get_vectorstore
 
 logger = logging.getLogger(__name__)
 
