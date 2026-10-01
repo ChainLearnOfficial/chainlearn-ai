@@ -3,7 +3,7 @@
 import logging
 
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from src.models.quiz import QuizQuestion
 from src.services.feedback_engine import get_feedback_engine
@@ -22,6 +22,20 @@ class GenerateFeedbackRequest(BaseModel):
     correct_answers: list[int] = Field(..., description="Correct answer indices")
     score: float | None = Field(default=None, description="Score percentage (0-100)")
     topic: str = Field(default="", description="Quiz topic for context")
+
+    @model_validator(mode="after")
+    def validate_list_lengths(self) -> "GenerateFeedbackRequest":
+        """Ensure questions, user_answers, and correct_answers have the same length."""
+        n_questions = len(self.questions)
+        n_user = len(self.user_answers)
+        n_correct = len(self.correct_answers)
+        if not (n_questions == n_user == n_correct):
+            raise ValueError(
+                f"List length mismatch: questions={n_questions}, "
+                f"user_answers={n_user}, correct_answers={n_correct}. "
+                f"All three lists must have the same length."
+            )
+        return self
 
 
 class FeedbackResponse(BaseModel):
