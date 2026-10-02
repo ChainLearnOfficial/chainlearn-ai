@@ -1,6 +1,7 @@
 """Intelligent feedback engine for quiz results."""
 
 import logging
+from typing import Any
 
 from src.models.quiz import QuizQuestion
 from src.prompts.feedback import build_feedback_prompt
@@ -34,8 +35,11 @@ class Feedback:
 class FeedbackEngine:
     """Generates personalized feedback on quiz performance."""
 
-    def __init__(self) -> None:
-        self._client = get_cohere_client()
+    def __init__(self, client: Any = None) -> None:
+        if client is not None:
+            self._client = client
+        else:
+            self._client = get_cohere_client()
 
     def _compute_score(self, user_answers: list[int], correct_answers: list[int]) -> float:
         """Compute score as a percentage."""

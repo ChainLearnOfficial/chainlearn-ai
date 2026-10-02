@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     )
 
     # Cohere
-    cohere_api_key: str
+    cohere_api_key: str = ""
     cohere_embed_model: str = "embed-english-v3.0"
     cohere_generate_model: str = "command-nightly"
 

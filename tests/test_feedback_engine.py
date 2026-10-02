@@ -1,5 +1,7 @@
 """Tests for the feedback engine service."""
 
+from unittest.mock import MagicMock
+
 import pytest
 
 from src.models.quiz import QuizQuestion
@@ -11,7 +13,8 @@ class TestFeedbackScoreComputation:
 
     @pytest.fixture
     def engine(self):
-        return FeedbackEngine()
+        mock_client = MagicMock()
+        return FeedbackEngine(client=mock_client)
 
     def test_perfect_score(self, engine):
         user = [0, 1, 2]
@@ -41,7 +44,8 @@ class TestQuickFeedback:
 
     @pytest.fixture
     def engine(self):
-        return FeedbackEngine()
+        mock_client = MagicMock()
+        return FeedbackEngine(client=mock_client)
 
     @pytest.fixture
     def sample_question(self):
