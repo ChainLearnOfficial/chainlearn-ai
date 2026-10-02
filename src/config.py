@@ -3,7 +3,11 @@
 Reads from environment variables or a .env file.
 """
 
+from pathlib import Path
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
 class Settings(BaseSettings):
@@ -29,7 +33,7 @@ class Settings(BaseSettings):
     chunk_size: int = 500
     chunk_overlap: int = 50
     embedding_dimensions: int = 1024
-    index_path: str = "src/knowledge/data/index.json"
+    index_path: str = str(PROJECT_ROOT / "src" / "knowledge" / "data" / "index.json")
 
     # Generation defaults
     default_max_tokens: int = 2048
